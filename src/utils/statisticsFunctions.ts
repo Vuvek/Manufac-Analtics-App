@@ -98,10 +98,10 @@ const calculateClassWiseStats = (wineData: WineData[], property: Property) => {
     }
 
     if (property) {
-      // property is not empty store Flavanoids values
+      // property is not empty hence store Flavanoids values from Wine Data.
       classWiseValues[`Alcohol ${alcoholClass}`].push(+wine[property]);
     } else {
-      // property is empty then calculate Gamma
+      // property is empty hence calculate Gamma Values.
       classWiseValues[`Alcohol ${alcoholClass}`].push(calculateGamma(wine));
     }
   }
