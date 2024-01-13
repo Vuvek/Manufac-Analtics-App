@@ -1,39 +1,47 @@
 import React from "react";
-import {
-  FlavanoidsStatsProps,
-} from "../types/wineUtils";
+import { FlavanoidsStatsProps } from "../types/wineTableTypes";
 
-const WineStatsTable: React.FC<FlavanoidsStatsProps> = ({ classWiseStats,title }) => {
+const WineStatsTable: React.FC<FlavanoidsStatsProps> = (props) => {
+  // props
+  const { classWiseStats, title } = props;
+
+  // Getting classData from storage
   const classData = JSON.parse(localStorage.getItem("classData") ?? "[]");
+
   return (
     <div className="table-container">
+      {/* Heading */}
       <h2 className="heading">{title} Statistics</h2>
+
       <table>
         <thead>
           <tr>
             <th>Measure</th>
-            {classData.map((wine: number[]) => (
-              <th key={`Class ${wine}`}>{`Class ${wine}`}</th>
+            {classData.map((wine: string) => (
+              <th key={wine}>{wine}</th>
             ))}
           </tr>
         </thead>
+
         <tbody>
           <tr>
             <td>{title} Mean</td>
-            {classData.map((wine: number[]) => (
-              <td key={`Class ${wine}`} >{classWiseStats[`Class ${wine}`].mean}</td>
+            {classData.map((wine: string) => (
+              <td key={wine}>{classWiseStats[wine].mean}</td>
             ))}
           </tr>
+
           <tr>
             <td>{title} Median</td>
-            {classData.map((wine: number[]) => (
-              <td key={`Class ${wine}`} >{classWiseStats[`Class ${wine}`].median}</td>
+            {classData.map((wine: string) => (
+              <td key={wine}>{classWiseStats[wine].median}</td>
             ))}
           </tr>
+
           <tr>
             <td>{title} Mode</td>
-            {classData.map((wine: number[]) => (
-              <td key={`Class ${wine}`} >{classWiseStats[`Class ${wine}`].mode}</td>
+            {classData.map((wine: string) => (
+              <td key={wine}>{classWiseStats[wine].mode}</td>
             ))}
           </tr>
         </tbody>
