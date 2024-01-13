@@ -15,6 +15,7 @@ const calculateMean = (data: number[]) => {
 // Function to calculate median
 const calculateMedian = (data: number[]) => {
   let median;
+  data = data.sort((a, b) => a - b);
   const mid = Math.floor(data.length / 2);
 
   if (data.length % 2 === 0) {
@@ -31,20 +32,24 @@ const calculateMedian = (data: number[]) => {
 
 // Function to calculate mode
 const calculateMode = (data: number[]) => {
-  const modeMap: Record<number, number> = {};
-  let maxCount = 0;
-  let mode: number | null = null;
+  let modeValues = [];
+  let maxFrequency = 0;
+  const frequencyMap: any = new Map();
 
-  data.forEach((value) => {
-    modeMap[value] = (modeMap[value] || 0) + 1;
+  for (const val of data) {
+    frequencyMap.set(val, (frequencyMap.get(val) || 0) + 1);
+  }
 
-    if (modeMap[value] > maxCount) {
-      maxCount = modeMap[value];
-      mode = value;
+  for (const [value, frequency] of frequencyMap) {
+    if (frequency > maxFrequency) {
+      modeValues = [value];
+      maxFrequency = frequency;
+    } else if (frequency === maxFrequency) {
+      modeValues.push(value);
     }
-  });
+  }
 
-  return mode !== null ? (mode as number).toFixed(3) : "No mode";
+  return modeValues.length === data.length ? "No mode" : modeValues.join(",");
 };
 
 // Function to calculate Statistics
@@ -68,7 +73,7 @@ const calculateStatisticalMeasures = (
     classWiseStatistics[alcoholClass] = {
       mean: +mean,
       median: +median,
-      mode: +mode,
+      mode: mode,
     };
   }
 
@@ -85,22 +90,22 @@ const calculateGamma = (entry: WineData) => {
 const calculateClassWiseStats = (wineData: WineData[], property: Property) => {
   const classWiseValues: ClassWiseValues = {};
 
-  // Iterate through the dataset and collect "Flavanoids" or Gamma values for each class
   for (const wine of wineData) {
     const alcoholClass = wine.Alcohol;
 
-    if (!classWiseValues[`Class ${alcoholClass}`]) {
-      classWiseValues[`Class ${alcoholClass}`] = [];
+    if (!classWiseValues[`Alcohol ${alcoholClass}`]) {
+      classWiseValues[`Alcohol ${alcoholClass}`] = [];
     }
 
     if (property) {
       // property is not empty store Flavanoids values
-      classWiseValues[`Class ${alcoholClass}`].push(+wine[property]);
+      classWiseValues[`Alcohol ${alcoholClass}`].push(+wine[property]);
     } else {
       // property is empty then calculate Gamma
-      classWiseValues[`Class ${alcoholClass}`].push(calculateGamma(wine));
+      classWiseValues[`Alcohol ${alcoholClass}`].push(calculateGamma(wine));
     }
   }
+  console.log(classWiseValues, "skdjffksdjflksdjflkdsclass");
   // storing classData in the storage
   localStorage.setItem(
     "classData",

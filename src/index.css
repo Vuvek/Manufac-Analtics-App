@@ -36,6 +36,5 @@ td {
 
 table {
   width: 600px;
-  overflow-x: scroll;
   border-collapse: collapse;
 }

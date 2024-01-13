@@ -16,7 +16,7 @@ export interface WineData {
 
 export interface Stats {
   mean: number;
-  mode: number;
+  mode: string;
   median: number;
 }
 
