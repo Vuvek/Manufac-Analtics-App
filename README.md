@@ -10,6 +10,6 @@ This project was bootstrapped with [Create React App].
 2) npm run start (to run server)
 
 
-![Alt text](/imgs/anayltics.png ?raw=true "Optional Title")
+![ScreenShot](/imgs/analytics.png?raw=true "Employee Data title")
 
 
