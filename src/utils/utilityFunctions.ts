@@ -1,21 +1,21 @@
-import { ClassWiseStats, Property, Stats, WineData } from "../types/wineUtils";
-import "./customPolyfills"
+import { ClassWiseStats, ClassWiseValues, Property, WineData } from "../types/wineUtils";
 
+
+// Function to calculate mean
 const calculateMean = (data : number[]) => {
 
-    // Calculate mean
     const mean = data.reduce((sum, current : any) => sum + current, 0) / data.length;
     return mean.toFixed(3);
 }
 
 
-  // Function to calculate median
+
+// Function to calculate median
 const calculateMedian = (data : number[]) => {
   let median;
 
   const mid = Math.floor(data.length / 2);
 
-    // calculate median
     if(data.length % 2 === 0) {
       const middle1 = data[mid - 1];
       const middle2 = data[mid];
@@ -28,8 +28,9 @@ const calculateMedian = (data : number[]) => {
 }
 
 
+
 // Function to calculate mode
-export const calculateMode = (data: number[]) => {
+const calculateMode = (data: number[]) => {
   const modeMap: Record<number, number> = {};
   let maxCount = 0;
   let mode: number | null = null;
@@ -48,29 +49,37 @@ export const calculateMode = (data: number[]) => {
 
 
   
-  // Function to calculate Statistics
-export const calculateStatisticalMeasures = (data : number[]) : Stats => {
+// Function to calculate Statistics
+const calculateStatisticalMeasures = (classWiseValues : ClassWiseValues) : ClassWiseStats => {
+  const classWiseStatistics : ClassWiseStats = {};
 
-  // Calculate mean
-  const mean = calculateMean(data);
 
-  // Calculate median
-  const median = calculateMedian(data);
+  for (const alcoholClass in classWiseValues) {
+    const values = classWiseValues[alcoholClass];
 
-  // Calculate mode
-  const mode = calculateMode(data);
+    // Calculate mean
+    const mean = calculateMean(values);
 
-  return {mean : +mean,mode : +mode,median : +median};
+    // Calculate median
+    const median = calculateMedian(values);
+
+    // Calculate mode
+    const mode = calculateMode(values);
+
+    classWiseStatistics[alcoholClass] = {
+      mean : +mean,
+      median : +median,
+      mode : +mode,
+    };
+  }
+
+  return classWiseStatistics;
+
 };
-
-
-export const getClassNames = (wineData : WineData[]) => {
-  return Array.from(new Set(wineData.map(wine => wine.Alcohol)));
-}
   
 
 // Gamma Function
-export const calculateGamma = (entry : WineData) => {
+const calculateGamma = (entry : WineData) => {
   const {Ash,Hue,Magnesium} = entry;
   return Number(((+Ash * +Hue) / +Magnesium).toFixed(3))
 }
@@ -78,16 +87,23 @@ export const calculateGamma = (entry : WineData) => {
 
 // Function to calculate class-wise statistics for Flavanoids or Gamma
 export const calculateClassWiseStats = (wineData: WineData[],property : Property) => {
-  const classStats : ClassWiseStats = {};
-  let classData = getClassNames(wineData);
-  localStorage.setItem("classData",JSON.stringify(classData));
+  const classWiseValues : ClassWiseValues = {};
 
-  classData.forEach(wine => {
-    // Filter data by class
-    const cleanData = wineData.CustomFilter((entry) => entry.Alcohol === wine,property);
+  // Iterate through the dataset and collect "Flavanoids" or Gamma values for each class
+  for (const wine of wineData) {
+    const alcoholClass = wine.Alcohol;
 
-    classStats[`Class ${wine}`] = calculateStatisticalMeasures(cleanData);
-  })
+    if (!classWiseValues[`Class ${alcoholClass}`]) {
+      classWiseValues[`Class ${alcoholClass}`] = [];
+    }
+    if(property) {
+      classWiseValues[`Class ${alcoholClass}`].push(+wine[property]);
+    } else {
+      classWiseValues[`Class ${alcoholClass}`].push(calculateGamma(wine));
+    }
+    
+  }
 
-  return classStats;
+  return calculateStatisticalMeasures(classWiseValues);
+
 };

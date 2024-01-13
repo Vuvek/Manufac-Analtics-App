@@ -36,6 +36,9 @@ export interface FlavanoidsStatsProps {
     title : string;
 }
 
+export interface ClassWiseValues {
+    [key : string] : number[]
+}
 
  export type Property = 'Flavanoids' | ''
   
