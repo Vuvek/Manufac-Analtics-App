@@ -1,4 +1,3 @@
-import React from "react";
 import { FlavanoidsStatsProps } from "../types/wineTableTypes";
 
 const WineStatsTable: React.FC<FlavanoidsStatsProps> = (props) => {

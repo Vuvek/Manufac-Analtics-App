@@ -1,8 +1,8 @@
 import {
-  ClassWiseStats,
-  ClassWiseValues,
   Property,
   WineData,
+  ClassWiseStats,
+  ClassWiseValues
 } from "../types/wineTableTypes";
 
 // Function to calculate mean
@@ -105,7 +105,6 @@ const calculateClassWiseStats = (wineData: WineData[], property: Property) => {
       classWiseValues[`Alcohol ${alcoholClass}`].push(calculateGamma(wine));
     }
   }
-  console.log(classWiseValues, "skdjffksdjflksdjflkdsclass");
   // storing classData in the storage
   localStorage.setItem(
     "classData",
