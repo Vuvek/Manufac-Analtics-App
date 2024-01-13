@@ -1,4 +1,4 @@
-Analytics project
+# Analytics project
 This repository contains an Data Visulization Task developed using React.JS.
 
 # Getting Started with Create React App
@@ -10,6 +10,6 @@ This project was bootstrapped with [Create React App].
 2) npm run start (to run server)
 
 
-![Alt text](/imgs/anayltics.png "Optional title")
+![Alt text](/imgs/anayltics.png ?raw=true "Optional Title")
 
 
