@@ -13,7 +13,7 @@ const WineStatsTable: React.FC<FlavanoidsStatsProps> = ({ classWiseStats,title }
           <tr>
             <th>Measure</th>
             {classData.map((wine: number[]) => (
-              <th>{`Class ${wine}`}</th>
+              <th key={`Class ${wine}`}>{`Class ${wine}`}</th>
             ))}
           </tr>
         </thead>
@@ -21,19 +21,19 @@ const WineStatsTable: React.FC<FlavanoidsStatsProps> = ({ classWiseStats,title }
           <tr>
             <td>{title} Mean</td>
             {classData.map((wine: number[]) => (
-              <td>{classWiseStats[`Class ${wine}`].mean}</td>
+              <td key={`Class ${wine}`} >{classWiseStats[`Class ${wine}`].mean}</td>
             ))}
           </tr>
           <tr>
             <td>{title} Median</td>
             {classData.map((wine: number[]) => (
-              <td>{classWiseStats[`Class ${wine}`].median}</td>
+              <td key={`Class ${wine}`} >{classWiseStats[`Class ${wine}`].median}</td>
             ))}
           </tr>
           <tr>
             <td>{title} Mode</td>
             {classData.map((wine: number[]) => (
-              <td>{classWiseStats[`Class ${wine}`].mode}</td>
+              <td key={`Class ${wine}`} >{classWiseStats[`Class ${wine}`].mode}</td>
             ))}
           </tr>
         </tbody>

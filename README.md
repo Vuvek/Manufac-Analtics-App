@@ -10,6 +10,6 @@ This project was bootstrapped with [Create React App].
 2) npm run start (to run server)
 
 
-![ScreenShot](/imgs/analytics.png?raw=true "Employee Data title")
+![ScreenShot](public/imgs/analytics.png?raw=true "Employee Data title")
 
 

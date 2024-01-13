@@ -1,7 +1,8 @@
 import { ClassWiseStats, Property, Stats, WineData } from "../types/wineUtils";
+import "./customPolyfills"
 
 const calculateMean = (data : number[]) => {
-  
+
     // Calculate mean
     const mean = data.reduce((sum, current : any) => sum + current, 0) / data.length;
     return mean.toFixed(3);
